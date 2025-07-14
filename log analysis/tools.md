@@ -31,7 +31,7 @@ K->Kibana --> visualizes data
 
 *500+ plugins
 
--loght weight & scalable
+-light weight & scalable
 
 -great for micro services & containerized environments
 
@@ -54,3 +54,4 @@ K->Kibana --> visualizes data
 -cloudnative log management
 
 -reduces storage costs by 10x to full text systems
+
