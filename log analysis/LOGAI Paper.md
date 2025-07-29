@@ -77,3 +77,57 @@ neural network (CNN), Transformers and pretrained Transformer based Language Mod
 are anomaly scores for each log sequence.
 # ML MODELS
 ![ML](IMAGES/MLalgo.png)
+#
+- The existing Loglizer library provides the more traditional machine learning
+algorithms for log based anomaly detection, with the Deep-Loglizer being a deep-learning based counterpart of it,
+providing only neural ML models.
+- provides a generic framework encompassing most of the
+popular AI/ML algorithms - starting from traditional statistical ML models to popular neural models and BERT.
+# Unsupervised Anomaly detection !
+
+
+| Paradigm       | Model(s)               | Key Principle             | Main Metric | Trained On       |
+| -------------- | ---------------------- | ------------------------- | ----------- | ---------------- |
+| Forecasting    | LSTM, CNN, Transformer | Predict next event ID     | F1 Score    | Only normal logs |
+| Reconstruction | LogBERT                | Reconstruct masked tokens | AUROC  (Area under Receiver Operating Characteristic Curve)      | Only normal logs |
+
+- ## **Forecasting-Based Models** (Predict Next Log Event)
+
+    **How it works:** Train a model to predict the next log event (ID) based on the previous sequence.
+
+    **Loss used:** Cross-entropy between predicted and actual event.
+
+    **Assumption:** If the model predicts something far from the actual event, it might be an anomaly.
+
+1.  **LSTM (DeepLog, LogAnomaly):**
+
+    - Unidirectional or bidirectional.
+
+    - Can use attention mechanism.
+2. **CNN:** Applies convolution + pooling to encode the log sequence (used only in supervised settings before).
+3. **Transformer (LogSy):** Uses self-attention; averages token embeddings to get a sequence representation.
+- During inference,
+If the true next event is not among top-k (e.g., top-10) predictions → mark as anomaly.
+
+
+- ## **Reconstruction-Based Models** (Rebuild Input Logs)
+- Try to reconstruct masked tokens from a log sequence. If reconstruction fails → possibly an anomaly.
+- **Loss used:** Masked Language Modeling (MLM) loss.
+
+- **Assumption:** Normal logs can be reconstructed well; anomalous ones cannot.
+
+ex: **LogBERT**(from LanoBERT paper)
+
+- Based on BERT transformer.
+
+- Trains tokenizer from scratch on log data.
+
+- No need for structured parsing.
+
+- Inference uses sliding masking windows, computes average confidence → anomaly score.
+
+
+
+
+
+    
